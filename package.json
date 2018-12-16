@@ -1,6 +1,6 @@
 {
   "name": "euromap63-lib",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Euromap 63 library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,6 +29,7 @@
     "Manufacturing execution system"
   ],
   "dependencies": {
+    "@types/node": "^10.12.15",
     "nodemon": "^1.18.9",
     "ts-loader": "^5.3.1",
     "ts-node": "^7.0.1",
