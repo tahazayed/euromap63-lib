@@ -1,7 +1,13 @@
-import { EuroMap63Config } from "../config/eurpmap63config";
-import { IPCEncoderService } from "./ipcencoder.service";
+import { MachineConfig } from "../config/MachineConfig";
+import { ApplicationLayerService } from "./applicationlayer.service";
 
 export class IPCServerService{
-    constructor(private readonly ipcEncoder: IPCEncoderService,
-                public euroMap63Config: EuroMap63Config){};
+    public readonly applicationLayerService: ApplicationLayerService;
+    constructor(public machineConfig: MachineConfig){
+        this.applicationLayerService = new ApplicationLayerService(machineConfig);
+    };
+    
+    public GetInfo(): MachineConfig{
+        return this.applicationLayerService.GetInfo();
+    }   
 }
