@@ -1,21 +1,27 @@
-import * as fs from 'fs';
+
 import { MachineConfig } from "../config/machineconfig";
 import { PresentationLayerService } from "./presentationlayer.service";
+import { UtilsService } from './utils.service';
 
 export class ApplicationLayerService{
     private readonly presentationLayerService: PresentationLayerService;
     constructor(public machineConfig: MachineConfig){
         this.presentationLayerService = new PresentationLayerService(this.machineConfig);
     }
-    public GetInfo(): MachineConfig{
+    public async GetInfo(): Promise<MachineConfig>{
         const request = this.presentationLayerService.CosntructCommand('GETINFO',
-        [`${this.machineConfig.SESSIONPATH}\\mach_00.inf`]);
+        [`"${this.machineConfig.SESSIONPATH}\\mach_00.inf"`]);
 
-        fs.writeFileSync(request.key,
-            request.value,
-            {encoding:'ascii',
-            flag:'wx'});
+        const requestFilePath = `${this.machineConfig.SESSIONPATH}\\${request.key}`;
+        await UtilsService.DeleteFile(requestFilePath);
 
-        return this.machineConfig;
+        if (await UtilsService.WriteFile(requestFilePath, request.value))
+        {
+             return this.machineConfig; 
+        }
+         
+
+        return Promise.reject(new Error('fail'));
     }
+            
 }

@@ -7,7 +7,7 @@ export class IPCServerService{
         this.applicationLayerService = new ApplicationLayerService(machineConfig);
     };
     
-    public GetInfo(): MachineConfig{
-        return this.applicationLayerService.GetInfo();
+    public async GetInfo(): Promise<MachineConfig>{
+        return await this.applicationLayerService.GetInfo();
     }   
 }
