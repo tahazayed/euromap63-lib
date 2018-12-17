@@ -9,8 +9,9 @@ export class ApplicationLayerService{
         this.presentationLayerService = new PresentationLayerService(this.machineConfig);
     }
     public async GetInfo(): Promise<MachineConfig>{
+        const outputFilePath = `"${this.machineConfig.SESSIONPATH}\\mach_00.inf"`;
         const request = this.presentationLayerService.CosntructCommand('GETINFO',
-        [`"${this.machineConfig.SESSIONPATH}\\mach_00.inf"`]);
+        [outputFilePath]);
 
         const requestFilePath = `${this.machineConfig.SESSIONPATH}\\${request.key}`;
         await UtilsService.DeleteFile(requestFilePath);
